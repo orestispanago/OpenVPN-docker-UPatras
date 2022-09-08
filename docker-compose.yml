@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  upatras_vpn:
+    container_name: upatras_vpn_container
+    image: dperson/openvpn-client
+    cap_add:
+      - net_admin
+    devices:
+      - /dev/net/tun
+    dns:
+      - 150.140.129.30
+    networks:
+      - upatras_vpn_network
+    restart: unless-stopped
+    volumes:
+      - ./vpn:/vpn
+
+networks:
+    upatras_vpn_network:
+      ipam:
+        config:
+          - subnet: 172.22.0.0/24
